@@ -35,17 +35,20 @@ class _LoginPageState extends State<LoginPage> {
                 validator: _validateLogin,
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
-                ),
+                nextFocus: _focusSenha),
             SizedBox(
               height: 10,
             ),
-            _text("Senha", "Digite a senha",
-                password: true,
-                controller: _tSenha,
-                validator: _validateSenha,
-                keyboardType: TextInputType.number,
-                textInputAction: TextInputAction.done,
-              focusNode: _focusSenha,),
+            _text(
+              "Senha",
+              "Digite a senha",
+              password: true,
+              controller: _tSenha,
+              validator: _validateSenha,
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.done,
+              focusNode: _focusSenha,
+            ),
             SizedBox(
               height: 20,
             ),
@@ -56,16 +59,14 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  _text(
-    String label,
-    String hint, {
-    bool password = false,
-    TextEditingController controller,
-    FormFieldValidator<String> validator,
-    TextInputType keyboardType,
-    TextInputAction textInputAction,
-    FocusNode focusNode,
-  }) {
+  _text(String label, String hint,
+      {bool password = false,
+      TextEditingController controller,
+      FormFieldValidator<String> validator,
+      TextInputType keyboardType,
+      TextInputAction textInputAction,
+      FocusNode focusNode,
+      FocusNode nextFocus}) {
     return TextFormField(
       controller: controller,
       obscureText: password,
@@ -74,7 +75,9 @@ class _LoginPageState extends State<LoginPage> {
       textInputAction: textInputAction,
       focusNode: focusNode,
       onFieldSubmitted: (String text) {
-        FocusScope.of(context).requestFocus(_focusSenha);
+        if (nextFocus != null) {
+          FocusScope.of(context).requestFocus(nextFocus);
+        }
       },
       style: TextStyle(
         fontSize: 18,
