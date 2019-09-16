@@ -81,9 +81,7 @@ class LoginPage extends StatelessWidget {
   }
 
   _onClickLogin() {
-    bool formOk = _formKey.currentState.validate();
-
-    if (!formOk) {
+    if (!_formKey.currentState.validate()) {
       return;
     }
 
