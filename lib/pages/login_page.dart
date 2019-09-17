@@ -1,3 +1,5 @@
+import 'package:carros/widgets/app_button.dart';
+import 'package:carros/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -6,8 +8,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _tLogin = TextEditingController();
-  final _tSenha = TextEditingController();
+  final _tLogin = TextEditingController(text: "fernando");
+  final _tSenha = TextEditingController(text: "123");
 
   final _formKey = GlobalKey<FormState>();
   final _focusSenha = FocusNode();
@@ -30,16 +32,18 @@ class _LoginPageState extends State<LoginPage> {
         padding: EdgeInsets.all(16),
         child: ListView(
           children: <Widget>[
-            _text("Login", "Digite o login",
+            AppText("Login",
+                "Digite o login",
                 controller: _tLogin,
                 validator: _validateLogin,
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
-                nextFocus: _focusSenha),
+                nextFocus: _focusSenha
+            ),
             SizedBox(
               height: 10,
             ),
-            _text(
+            AppText(
               "Senha",
               "Digite a senha",
               password: true,
@@ -52,58 +56,11 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               height: 20,
             ),
-            _button("Login", _onClickLogin)
+            AppButton("Login",
+                onPressed: () => _onClickLogin(),
+            )
           ],
         ),
-      ),
-    );
-  }
-
-  _text(String label, String hint,
-      {bool password = false,
-      TextEditingController controller,
-      FormFieldValidator<String> validator,
-      TextInputType keyboardType,
-      TextInputAction textInputAction,
-      FocusNode focusNode,
-      FocusNode nextFocus}) {
-    return TextFormField(
-      controller: controller,
-      obscureText: password,
-      validator: validator,
-      keyboardType: keyboardType,
-      textInputAction: textInputAction,
-      focusNode: focusNode,
-      onFieldSubmitted: (String text) {
-        if (nextFocus != null) {
-          FocusScope.of(context).requestFocus(nextFocus);
-        }
-      },
-      style: TextStyle(
-        fontSize: 18,
-        color: Colors.blue,
-      ),
-      decoration: InputDecoration(
-          labelText: label,
-          labelStyle: TextStyle(fontSize: 16, color: Colors.grey),
-          hintText: hint,
-          hintStyle: TextStyle(color: Colors.green)),
-    );
-  }
-
-  _button(String text, Function onPressed) {
-    return Container(
-      height: 46,
-      child: RaisedButton(
-        color: Colors.blue,
-        child: Text(
-          "Login",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 22,
-          ),
-        ),
-        onPressed: onPressed,
       ),
     );
   }
@@ -135,5 +92,10 @@ class _LoginPageState extends State<LoginPage> {
       return "A senha precisa ter pelo menos 3 numeros";
     }
     return null;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }
