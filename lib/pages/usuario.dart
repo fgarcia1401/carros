@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 class Usuario {
   String login;
@@ -13,16 +12,11 @@ class Usuario {
      token = map["token"],
      nome  = map["nome"],
      email = map["email"],
-     roles = getRoles(map);
+     roles = map["roles"] != null ? map["roles"].map<String>((role) => role.toString()).toList() : "";
 
   @override
   String toString() {
     return 'Usuario{login: $login, nome: $nome, email: $email, token: $token, roles: $roles}';
-  }
-
-  static List<String> getRoles(Map<String, dynamic> map) {
-    List list = map["roles"];
-    return list.map<String>((role) => role.toString()).toList();
   }
 
 
